@@ -1,0 +1,67 @@
+Modalità code first:
+
+1) Creare class library e chiamarla: <Classe>.DA
+2) Creare ASP.NET Web Applicatione chiamarla: <Classe>WEB
+3) Aggiungere a <Classe>WEB la reference a <Classe>.DA
+
+4) Nel progetto <Classe>.DA aggiungere ADO.NET Entity Data Model e chiamarlo <Classe>DB, nella pagina sucessiva scegliere Empty Code First Model.
+
+5) Creare la cartella Model nella <Classe>.DA ed inserirci una classse Materia.cs aggiungere i 2 prop (MateriaId(int), Nome(string)) e ricordarsi di dichiarare la classe public!
+
+6) Nella classe <Classe>DB.cs creata in <Classe>.DA aggiungere la seguente riga di codice: public virtual DbSet<Materia> Materie { get; set; }
+
+7) Aprire il file App.config nella soluzione <Classe>.DA e modificare questo tag come segue:
+
+   <add name="VotiDB" 
+        connectionString="data source=(LocalDb)\v11.0;
+                          initial catalog=Voti.DA.VotiDB;
+                          AttachDbFilename=c:\temp\VotiDB.mdf;						<--------- Qui aggiungere la path corretta per il file .mdf che verrà generato-->
+                          integrated security=True;MultipleActiveResultSets=True;
+                          App=EntityFramework" 
+        providerName="System.Data.SqlClient"/>
+
+8) Sotto il Menu --> Tools --> NuGetPackageManager --> Package Manager Console aprirà una finestra in cui sotto --> Defaul project: controllare che ci sia <Classe>.DA selezionato.
+9) Scrivere nella "console apparsa" scrivere Enable-Migrations e quindi premere ENTER. un file chiamato Configuration.cs verrà aperto.
+10)Nel file Configuration.cs cambiare la seguente riga da false a true --> AutomaticMigrationsEnabled = true; . 
+11)Nella "console" aperta in precedenza scrivere Update-Database. Che genererà i file .mdf nella cartella precedentemente scelta.
+12)Connettersi al DB dal menu tramite --> TOOLS --> Connect to Database... --> Scrivere (LocalDB)v11.0 , OK --> Sotto browse scegliere il file generato .mdf
+13)Nella pagine per le query che si é aperta droppare il database scrivendo: drop database [Voti.DA.VotiDB] (perso dalla riga 3 al passo 7 di questo file di testo).
+14)Nel file Configuration.cs aggiungere le seguenti righe dentro il metodo Seed dopo le righe commentate:
+
+	context.Materie.AddOrUpdate(m => m.Nome,
+                                        new Materia { Nome = "Matematica" },
+                                        new Materia { Nome = "Italiano" },
+                                        new Materia { Nome = "Ginnastica" }
+                                        );
+  I nomi nella lista verranno inseriti nel DB dopo aver eseguito un Update-Database nella "console".
+15)Copiare il seguente testo dal file App.config dentro il tag:
+	
+	    <add name="VotiDB" 
+         connectionString="data source=(LocalDb)\v11.0;
+                           initial catalog=Voti.DA.VotiDB;
+                           AttachDbFilename=C:\Users\Flavio\Documents\Visual Studio 2013\Projects\06 VotiMVC\VotiDB.mdf;
+                           integrated security=True;MultipleActiveResultSets=True; 
+                           App=EntityFramework" 
+         providerName="System.Data.SqlClient" />
+
+   ed incollarle il testo nel file Web.config della classe <Classe>WEB nel tag <connectionStrings>
+   Cancellare il tag sempre dal Web.config nel tag <connectionStrings>
+        <add name="VotiDB" connectionString="data source=(LocalDb)\v11.0;initial catalog=VotiWEB.VotiDB;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework" providerName="System.Data.SqlClient" />
+
+
+16) Nella soluzione <Classe>WEB premere tasto destro sulla cartella Controller --> Add... --> Controller --> MVC Controller with Views, Using entity framework.
+17) Nella finestra apparsa selezionare: 
+
+	Model class: Materia (Voti.DA.Model) 
+	Data context class: VotiDB (Voti.DA)
+	...
+	Controller name: MateriaController (togliere la s da Materias).
+
+17) Aprire il file _Layout.cshtml (<Classe>WEB --> Views --> Materia --> Shared) ed incollare sotto il tag <li>@Html.ActionLink("Contact", "Contact", "Home")</li> il tag <li>@Html.ActionLink("Materia", "Index", "Materia")</li>
+18) Ora il sito é funzionante se si fa partire il file <Classe>WEB. 
+19) Per ordinare la lista apparsa modificare il file MateriaController.cs (<Classe>WEB --> Contollers) modificare la riga nel metodo  public ActionResult Index():
+		
+		return View(db.Materie.OrderBy(m => m.Nome).ToList());
+                    
+                    
+

@@ -1,0 +1,89 @@
+09:17:35  [main] 	Initializing Control Panel
+09:17:35  [main] 	Windows Version:  Pro  64-bit
+09:17:35  [main] 	XAMPP Version: 5.6.28
+09:17:35  [main] 	Control Panel Version: 3.2.2  [ Compiled: Nov 12th 2015 ]
+09:17:35  [main] 	You are not running with administrator rights! This will work for
+09:17:35  [main] 	most application stuff but whenever you do something with services
+09:17:35  [main] 	there will be a security dialogue or things will break! So think 
+09:17:35  [main] 	about running this application with administrator rights!
+09:17:35  [main] 	XAMPP Installation Directory: "d:\xampp\"
+09:17:35  [main] 	Checking for prerequisites
+09:18:24  [main] 	All prerequisites found
+09:18:24  [main] 	Initializing Modules
+09:18:24  [mysql] 	Problem detected!
+09:18:24  [mysql] 	Port 3306 in use by ""C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqld.exe" --defaults-file="C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" MySQL57"!
+09:18:24  [mysql] 	MySQL WILL NOT start without the configured ports free!
+09:18:24  [mysql] 	You need to uninstall/disable/reconfigure the blocking application
+09:18:24  [mysql] 	or reconfigure MySQL and the Control Panel to listen on a different port
+09:18:24  [main] 	The FileZilla module is disabled
+09:18:24  [main] 	The Mercury module is disabled
+09:18:24  [main] 	The Tomcat module is disabled
+09:18:24  [main] 	Starting Check-Timer
+09:18:24  [main] 	Control Panel Ready
+09:18:33  [main] 	Deinitializing Modules
+09:18:33  [main] 	Deinitializing Control Panel
+
+08:37:10  [main] 	Initializing Control Panel
+08:37:10  [main] 	Windows Version:  Pro  64-bit
+08:37:10  [main] 	XAMPP Version: 5.6.28
+08:37:10  [main] 	Control Panel Version: 3.2.2  [ Compiled: Nov 12th 2015 ]
+08:37:10  [main] 	You are not running with administrator rights! This will work for
+08:37:10  [main] 	most application stuff but whenever you do something with services
+08:37:10  [main] 	there will be a security dialogue or things will break! So think 
+08:37:10  [main] 	about running this application with administrator rights!
+08:37:10  [main] 	XAMPP Installation Directory: "d:\xampp\"
+08:37:10  [main] 	Checking for prerequisites
+08:37:10  [main] 	All prerequisites found
+08:37:10  [main] 	Initializing Modules
+08:37:10  [mysql] 	Problem detected!
+08:37:10  [mysql] 	Port 3306 in use by ""C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqld.exe" --defaults-file="C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" MySQL57"!
+08:37:10  [mysql] 	MySQL WILL NOT start without the configured ports free!
+08:37:10  [mysql] 	You need to uninstall/disable/reconfigure the blocking application
+08:37:10  [mysql] 	or reconfigure MySQL and the Control Panel to listen on a different port
+08:37:10  [main] 	The FileZilla module is disabled
+08:37:10  [main] 	The Mercury module is disabled
+08:37:10  [main] 	The Tomcat module is disabled
+08:37:10  [main] 	Starting Check-Timer
+08:37:10  [main] 	Control Panel Ready
+08:38:48  [main] 	Deinitializing Modules
+08:38:48  [main] 	Deinitializing Control Panel
+
+08:19:36  [main] 	Initializing Control Panel
+08:19:36  [main] 	Windows Version:  Pro  64-bit
+08:19:36  [main] 	XAMPP Version: 5.6.28
+08:19:36  [main] 	Control Panel Version: 3.2.2  [ Compiled: Nov 12th 2015 ]
+08:19:36  [main] 	You are not running with administrator rights! This will work for
+08:19:36  [main] 	most application stuff but whenever you do something with services
+08:19:36  [main] 	there will be a security dialogue or things will break! So think 
+08:19:36  [main] 	about running this application with administrator rights!
+08:19:36  [main] 	XAMPP Installation Directory: "d:\xampp\"
+08:19:36  [main] 	Checking for prerequisites
+08:19:44  [main] 	All prerequisites found
+08:19:44  [main] 	Initializing Modules
+08:19:44  [mysql] 	Problem detected!
+08:19:44  [mysql] 	Port 3306 in use by ""C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqld.exe" --defaults-file="C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" MySQL57"!
+08:19:44  [mysql] 	MySQL WILL NOT start without the configured ports free!
+08:19:44  [mysql] 	You need to uninstall/disable/reconfigure the blocking application
+08:19:44  [mysql] 	or reconfigure MySQL and the Control Panel to listen on a different port
+08:19:44  [main] 	The FileZilla module is disabled
+08:19:44  [main] 	The Mercury module is disabled
+08:19:44  [main] 	The Tomcat module is disabled
+08:19:44  [main] 	Starting Check-Timer
+08:19:44  [main] 	Control Panel Ready
+08:24:19  [mysql] 	Problem detected!
+08:24:19  [mysql] 	Port 3306 in use by ""C:\Program Files\MySQL\MySQL Server 5.7\bin\mysqld.exe" --defaults-file="C:\ProgramData\MySQL\MySQL Server 5.7\my.ini" MySQL57"!
+08:24:19  [mysql] 	MySQL WILL NOT start without the configured ports free!
+08:24:19  [mysql] 	You need to uninstall/disable/reconfigure the blocking application
+08:24:19  [mysql] 	or reconfigure MySQL and the Control Panel to listen on a different port
+08:24:19  [mysql] 	Attempting to start MySQL app...
+08:24:21  [mysql] 	Status change detected: running
+08:24:23  [mysql] 	Attempting to stop MySQL app...
+08:24:26  [mysql] 	Status change detected: stopped
+08:24:28  [Apache] 	Attempting to start Apache app...
+08:24:28  [Apache] 	Status change detected: running
+08:34:08  [Apache] 	Attempting to stop Apache (PID: 3660)
+08:34:08  [Apache] 	Attempting to stop Apache (PID: 6480)
+08:34:09  [Apache] 	Status change detected: stopped
+08:34:10  [main] 	Deinitializing Modules
+08:34:10  [main] 	Deinitializing Control Panel
+
