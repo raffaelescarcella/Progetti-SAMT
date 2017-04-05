@@ -37,7 +37,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Docente:</strong>
-                <select name="user_id" class="selectpicker form-control" data-live-search="true">
+                <select name="user_id" class="selectpicker form-control" data-live-search="true" id="teacher_select">
                     <option hidden selected id="user_id" value=""></option>
                     @foreach ($users as $user)
                         <option id="user_id" value="{{$user->id}}">{{ $user->name . ' ' . $user->surname}}</option>
@@ -77,6 +77,13 @@
             <div class="form-group">
                 <strong>Data di fine:</strong>
                 {{ Form::date('end_date', null, array('placeholder' => 'Data di fine','class' => 'form-control')) }}
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Numero massimo di partecipanti:</strong>
+                {{ Form::number('max_participants', null, array('placeholder' => 'Numero massimo di partecipanti','class' => 'form-control')) }}
             </div>
         </div>
 

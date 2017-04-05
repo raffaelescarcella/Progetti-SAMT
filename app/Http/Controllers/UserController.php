@@ -32,8 +32,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $usertypes = Type::all();
-        $userstates = UserState::all();
-        return view('User.edit',compact('user'))->with('usertypes', $usertypes)->with('userstates',$userstates);
+        return view('User.edit',compact('user'))->with('usertypes', $usertypes);
     }
 
     /**
@@ -52,7 +51,6 @@ class UserController extends Controller
             'surname' => 'required|max:255',
             'phone' => 'required|min:13|max:14',
             'birthday' => 'required|date',
-            'state_id' => 'required|integer',
         ]);
 
         User::find($id)->update([
@@ -62,7 +60,6 @@ class UserController extends Controller
                 'surname' => $request['surname'],
                 'phone' => $request['phone'],
                 'birthday' => $request['birthday'],
-                'state_id' => $request['state_id'],
             ]
         );
         return redirect()->route('users.index')

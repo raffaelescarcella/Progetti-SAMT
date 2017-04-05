@@ -10,7 +10,7 @@ class Assignment extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'project_id','user_id'
+        'project_id','user_id','final_rating'
     ];
 
     public function user(){

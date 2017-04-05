@@ -26,15 +26,18 @@
                 <th>Ambito</th>
                 <th>Data di inizio</th>
                 <th>Data di fine</th>
+                <th>Numero partecipanti</th>
                 <th>Stato</th>
                 @if(Auth::check() && Auth::user()->type_id == \App\Type::where('type','Allievo')->first()->id && $bool == 0)
                     <th></th>
                 @endif
             </tr>
             @foreach ($projects as $project)
+
                 <tr>
                     <td>{{ $project->name }}</td>
-                    <td>{{ $project->user->name . ' ' . $project->user->surname }}</td>
+                    @php($teacher = \App\User::where('id',$project->user)->first())
+                    <td>{{ $teacher->name . ' ' . $teacher->surname }}</td>
                     @php
                         $date = explode('-',$project->start_date);
                         $year = intval($date[0]);
@@ -46,19 +49,30 @@
                         <td>{{ ($year-1) .'-'. $year }}</td>
                     @endif
                     <td>{{ $project->number }}</td>
-                    <td>{{ $project->ambit->ambit }}</td>
+                    @php($ambit = \App\Ambit::where('id',$project->ambit)->first())
+                    <td>{{ $ambit->ambit }}</td>
                     <td>{{ $project->start_date }}</td>
                     <td>{{ $project->end_date }}</td>
-                    <td>{{ $project->projectstate->state }}</td>
                     @php
-
+                        $currentParticipants = \App\Project::join('assignments','projects.id','=','assignments.project_id')
+                            ->join('project_states','projects.state_id','=','project_states.id')
+                            ->where('projects.id',$project->id)
+                            ->whereNull('assignments.deleted_at')
+                            ->count();
                     @endphp
-                    @if(Auth::user()->type_id == \App\Type::where('type','Allievo')->first()->id && $bool == 0 && Auth::user()->state_id == \App\UserState ::where('state','Attivo')->first()->id)
-                        <td>
-                            {!! Form::open(['method' => 'PATCH','route' => ['freeprojects.update', $project->name],'style'=>'display:inline']) !!}
-                            {!! Form::submit('Seleziona', ['class' => 'btn btn-primary']) !!}
-                            {!! Form::close() !!}
-                        </td>
+                    <td>{{ $currentParticipants . '/' . $project->max_participants }}</td>
+                    <td>{{ $project->state }}</td>
+                    @if(Auth::user()->type_id == \App\Type::where('type','Allievo')->first()->id && $bool == 0)
+                        @if($project->max_participants > $currentParticipants)
+                            <td>
+                                {!! Form::open(['method' => 'PATCH','route' => ['freeprojects.update', $project->name],'style'=>'display:inline']) !!}
+                                {!! Form::submit('Seleziona', ['class' => 'btn btn-primary']) !!}
+                                {!! Form::close() !!}
+                            </td>
+                        @else
+                            <td></td>
+                        @endif
+                    @elseif(Auth::user()->type_id == \App\Type::where('type','Allievo')->first()->id && $bool == 0)
                     @endif
                 </tr>
             @endforeach

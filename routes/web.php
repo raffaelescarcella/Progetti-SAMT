@@ -13,9 +13,7 @@ use App\User;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'Controller@welcome');
 
 Auth::routes();
 
@@ -39,15 +37,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'App\Http\Middleware\Admin'], function () {
         Route::resource('users', 'UserController');
         Route::resource('types', 'TypeController');
-        Route::resource('userstates', 'UserStateController');
+        Route::resource('filetypes', 'FileTypeController');
         Route::resource('ambits', 'AmbitController');
         Route::resource('projectstates', 'ProjectStateController');
-        Route::resource('userconfirmations', 'UserConfirmationController');
     });
 });
 
 //route per gli utenti non registrati
 Route::resource('currentprojects', 'CurrentProjectController');
+
 Route::get('upload', function() {
     return View::make('currentprojects.upload');
 });

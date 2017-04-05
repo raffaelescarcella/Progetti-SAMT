@@ -26,7 +26,7 @@
         </div>
     @endif
 
-    {{Form::model($project, ['method' => 'PATCH','route' => ['projects.update', $project->id]]) }}
+    {{Form::model($project, ['method' => 'PATCH','route' => ['projects.update', $project->id], 'onsubmit' => 'return ConfirmDelete()']) }}
     <div class="row">
 
         <div class="col-xs-12 col-sm-12 col-md-12">
@@ -87,43 +87,36 @@
 
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Stato:</strong>
-                <br>
-                <select name="state_id" class="selectpicker form-control" data-live-search="true">
-                    <option style="display: none" selected id="state_id"
-                            value="{{$project->projectstate->id}}">{{ $project->projectstate->state }}</option>
-                    @foreach ($projectstates as $state)
-                        <option id="type_id" value="{{$state->id}}">{{ $state->state }}</option>
-                    @endforeach
-                </select>
+                <strong>Numero massimo di partecipanti:</strong>
+                {{ Form::number('max_participants', null, array('placeholder' => 'Numero massimo di partecipanti','class' => 'form-control')) }}
             </div>
         </div>
 
-        @php($check = \App\Project::join('project_states', 'projects.state_id', '=', 'project_states.id')
-            ->where('project_states.state', 'Concluso')
-            ->where('projects.id', $project->id)
-            ->count()
-        )
 
-
-        @if($check > 0)
+        @if(Auth::user()->type_id == \App\Type::where('type', 'Admin')->first()->id)
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Voto finale:</strong>
-                    {{ Form::text('final_rating', null, array('placeholder' => 'Voto finale','class' => 'form-control')) }}
-                </div>
-            </div>
+                    <strong>Stato:</strong>
+                    <br>
+                    <select name="state_id" class="selectpicker form-control" data-live-search="true">
+                        <option style="display: none" selected id="state_id"
+                                value="{{$project->projectstate->id}}">{{ $project->projectstate->state }}</option>
+                        @foreach ($projectstates as $state)
+                            <option id="type_id" value="{{$state->id}}">{{ $state->state }}</option>
+                        @endforeach
+                        @foreach ($adminStates as $state)
 
-        @else
-            <div class="col-xs-12 col-sm-12 col-md-12" style="display: none;">
-                <div class="form-group">
-                    <strong>Voto finale:</strong>
-                    {{ Form::text('final_rating', null, array('placeholder' => 'Voto finale','class' => 'form-control')) }}
-                </div>
-            </div>
+                            <option id="type_id" value="{{$state->id}}">{{ $state->state }}</option>
 
+                        @endforeach
+                    </select>
+                    <h5>(Se si modifica lo stato del progetto da "Concluso" ad un altro stato, tutte le note legate a
+                        quel
+                        progetto saranno cancellate!)</h5>
+                </div>
+
+            </div>
         @endif
-
 
 
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -131,5 +124,6 @@
         </div>
     </div>
     {{  Form::close() }}
+
 
 @endsection

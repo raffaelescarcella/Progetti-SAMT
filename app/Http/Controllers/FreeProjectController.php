@@ -25,6 +25,11 @@ class FreeProjectController extends Controller
         $projects = Project::join('project_states','projects.state_id','=','project_states.id')
             ->where('project_states.state','Disponibile')
             ->orWhere('project_states.state','In corso')
+            ->select('projects.id as id', 'projects.name as name',
+                'projects.user_id as user', 'projects.start_date',
+                'projects.number as number', 'projects.ambit_id as ambit',
+                'projects.end_date as end_date', 'project_states.state as state',
+                'projects.max_participants as max_participants')
             ->get();
 
         $assignment = Assignment::join('projects','assignments.project_id','=','projects.id')

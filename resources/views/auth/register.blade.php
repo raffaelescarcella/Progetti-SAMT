@@ -1,6 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<script>
+    function loading() {
+        var x = document.getElementById('register');
+        var y = document.getElementById('loading');
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+            x.style.display = 'none';
+        } else {
+            x.style.display = 'none';
+            y.style.display = 'block';
+        }
+    }
+</script>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -125,9 +140,14 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Registrati
-                                </button>
+                                <div id="register">
+                                    <button type="submit" class="btn btn-primary" onclick="loading()">
+                                        Registrati
+                                    </button>
+                                </div>
+                                <div id="loading" style="display: none">
+                                    <button class="btn btn-primary btn-lg"><i class="fa fa-spinner fa-spin" onclick="loading()"></i> Loading</button>
+                                </div>
                             </div>
                         </div>
                     </form>

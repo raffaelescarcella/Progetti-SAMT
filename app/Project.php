@@ -15,7 +15,7 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'number', 'final_rating', 'password','state_id','start_date','end_date','year','ambit_id','name','user_id'
+        'number', 'password','state_id','start_date','end_date','year','ambit_id','name','user_id','max_participants'
     ];
 
     public function user(){

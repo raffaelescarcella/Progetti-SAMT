@@ -24,6 +24,7 @@
             <th>Utente</th>
             <th>Progetto</th>
             <th>Docente</th>
+            <th>Voto finale</th>
             <th></th>
             <th></th>
         </tr>
@@ -39,6 +40,7 @@
                 @foreach($teachers as $teacher)
                     <td>{{ $teacher->nome . ' ' . $teacher->cognome }}</td>
                 @endforeach
+                <td> {{ $assignment->final_rating }}</td>
                 <td>
                     <a class="btn btn-primary" href="{{ route('assignments.edit',$assignment->id) }}">Modifica</a>
                 </td>

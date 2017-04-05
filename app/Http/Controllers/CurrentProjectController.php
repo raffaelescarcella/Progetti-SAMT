@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Ambit;
 use App\Assignment;
 use App\File;
+use App\FileType;
 use App\Project;
 use App\ProjectState;
 use App\User;
@@ -33,14 +34,12 @@ class CurrentProjectController extends Controller
         $projects = Project::join('project_states', 'projects.state_id', '=', 'project_states.id')
             ->join('assignments', 'projects.id', '=', 'assignments.project_id')
             ->join('users', 'assignments.user_id', '=', 'users.id')
-            ->join('user_states','users.state_id','=','user_states.id')
             ->where('project_states.state', 'In corso')
             ->whereNull('assignments.deleted_at')
-            ->where('user_states.state','Attivo')
             ->select('projects.id as id', 'projects.user_id',
                 'projects.name', 'projects.number',
                 'projects.ambit_id', 'projects.start_date',
-                'projects.end_date', 'projects.state_id', 'projects.final_rating',
+                'projects.end_date', 'projects.state_id',
                 'users.name AS nome', 'users.surname AS cognome',
                 'assignments.id as assignment')
             ->get();
@@ -96,16 +95,19 @@ class CurrentProjectController extends Controller
             ->where('assignments.id', $id)
             ->first();
 
+        $filetypes = FileType::all();
+
         $user = User::all()->where('id', $userId->id)->first();
         $project = Project::all()->where('id', $projectId->id)->first();
 
-        return view('CurrentProject.edit')->with('assignment', $id)->with('user', $user)->with('project', $project);
+        return view('CurrentProject.edit')->with('assignment', $id)->with('user', $user)->with('project', $project)->with('filetypes',$filetypes);
     }
 
     public function upload(Request $request)
     {
         $this->validate($request, [
             'file' => 'required|file',
+            'file_type_id' => 'required|integer',
         ]);
 
         $id = $request['id'];
@@ -146,6 +148,7 @@ class CurrentProjectController extends Controller
                     $db = new File;
                     $db->name = $name;
                     $db->assignment_id = $id;
+                    $db->file_type_id = $request['file_type_id'];
                     $db->date = date("Y-m-d");
                     $db->save();
                 }

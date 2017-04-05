@@ -74,6 +74,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Data</th>
+                <th>Tipo</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -81,9 +82,7 @@
                 <tr>
                     <td>{{ $file->name }}</td>
                     <td>{{ $file->date }}</td>
-                    @php
-                        $fileName = $file->name;
-                    @endphp
+                    <td>{{ $file->type->type }}</td>
                     <td>
                         <a target="_blank" href="{{ '/files/'.$user->surname.'-'.$project->name.'/'.$file->name }}">Visualizza</a>
                     </td>

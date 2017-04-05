@@ -70,22 +70,53 @@
     <div class="table-responsive">
         <table class="table table-bordered text-center">
             <tbody></tbody>
-        <tr>
-            <th>Nome</th>
-            <th>Data</th>
-            <th></th>
-        </tr>
-        @foreach ($files as $file)
             <tr>
-                <td>{{ $file->name }}</td>
-                <td>{{ $file->date }}</td>
-                <td>
-                    {!! Form::open(['method' => 'DELETE','route' => ['currentprojects.destroy', $file->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                </td>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Tipo</th>
+                <th></th>
+                <th></th>
+                <th></th>
             </tr>
-        @endforeach
-    </table>
+            @foreach ($files as $file)
+                @if($file->type->id != \App\FileType::where('type','Valutazione Finale')->first()->id)
+                    <tr>
+                        <td>{{ $file->name }}</td>
+                        <td>{{ $file->date }}</td>
+                        <td> {{ $file->type->type }}</td>
+                        <td>
+                            <a target="_blank" href="{{ '/files/'.$user->surname.'-'.$project->name.'/'.$file->name }}">Visualizza</a>
+                        </td>
+                        <td>
+                            <a download
+                               href="{{ '/files/'.$user->surname.'-'.$project->name.'/'.$file->name }}">Scarica </a>
+                        </td>
+                        <td>
+                            {!! Form::open(['method' => 'DELETE','route' => ['currentprojects.destroy', $file->id],'style'=>'display:inline']) !!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                @elseif(Auth::user()->type_id == \App\Type::where('type', 'Admin')->first()->id || Auth::user()->id == $project->user_id)
+                    <tr>
+                        <td>{{ $file->name }}</td>
+                        <td>{{ $file->date }}</td>
+                        <td> {{ $file->type->type }}</td>
+                        <td>
+                            <a target="_blank" href="{{ '/files/'.$user->surname.'-'.$project->name.'/'.$file->name }}">Visualizza</a>
+                        </td>
+                        <td>
+                            <a download
+                               href="{{ '/files/'.$user->surname.'-'.$project->name.'/'.$file->name }}">Scarica </a>
+                        </td>
+                        <td>
+                            {!! Form::open(['method' => 'DELETE','route' => ['currentprojects.destroy', $file->id],'style'=>'display:inline']) !!}
+                            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                            {!! Form::close() !!}
+                        </td>
+                    </tr>
+                @endif
+            @endforeach
+        </table>
     </div>
 @endsection

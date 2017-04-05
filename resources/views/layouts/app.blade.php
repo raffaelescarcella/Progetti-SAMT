@@ -97,13 +97,13 @@
                         <td><a href="/types">Tipi di utente</a></td>
                         <td><a href="/assignments">Assegnazioni</a></td>
                         <td><a href="/assignmentshistory">Storico assegnazioni</a></td>
-                        <td><a href="/userstates">Stati di utente</a></td>
+                        <td><a href="/projectstates">Stati dei progetti</a></td>
                     </tr>
                     <tr>
+                        <td><a href="/filetypes">Tipi di file</a></td>
                         <td><a href="/freeprojects">Progetti liberi</a></td>
                         <td><a href="/ambits">Ambiti progetto</a></td>
-                        <td><a href="/projectstates">Stati dei progetti</a></td>
-                        <td><a href="/userconfirmations">Accettazione utenti</a></td>
+
                     </tr>
                     <tr>
                         @elseif(Auth::check() && Auth::user()->type_id == \App\Type::where('type','Docente')->first()->id)

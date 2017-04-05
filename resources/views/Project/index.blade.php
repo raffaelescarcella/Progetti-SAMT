@@ -13,8 +13,13 @@
         </div>
     </div>
 
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @elseif($message = Session::get('deny'))
+        <div class="alert alert-danger">
             <p>{{ $message }}</p>
         </div>
     @endif
@@ -29,8 +34,8 @@
                 <th>Ambito</th>
                 <th>Data di inizio</th>
                 <th>Data di fine</th>
+                <th>Numero partecipanti</th>
                 <th>Stato</th>
-                <th>Voto finale</th>
                 <th></th>
             </tr>
             @foreach ($projects as $project)
@@ -52,8 +57,15 @@
                     <td>{{ $project->ambit->ambit }}</td>
                     <td>{{ $project->start_date }}</td>
                     <td>{{ $project->end_date }}</td>
+                    @php
+                        $currentParticipants = \App\Project::join('assignments','projects.id','=','assignments.project_id')
+                                                            ->join('project_states','projects.state_id','=','project_states.id')
+                                                            ->where('projects.id',$project->id)
+                                                            ->whereNull('assignments.deleted_at')
+                                                            ->count();
+                    @endphp
+                    <td>{{ $currentParticipants . '/' . $project->max_participants }}</td>
                     <td>{{ $project->projectstate->state }}</td>
-                    <td>{{ $project->final_rating }}</td>
                     <td>
                     <!--a class="btn btn-info" href="{{-- route('userCRUD.show',$user->id) --}}">Show</a-->
                         <a class="btn btn-primary" href="{{ route('projects.edit',$project->id) }}">Modifica</a>
@@ -63,6 +75,6 @@
         </table>
     </div>
 
-    {{-- $users->render() --}}
+
 
 @endsection

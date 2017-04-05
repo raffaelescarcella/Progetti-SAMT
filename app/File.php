@@ -16,11 +16,14 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'date','assignment_id'
+        'name', 'date','assignment_id','file_type_id'
     ];
 
     public function assignments(){
         return $this->belongsTo('App\Assignments', 'assignment_id');
+    }
+    public function type() {
+        return $this->belongsTo('App\FileType','file_type_id');
     }
 
     protected $dates = ['deleted_at'];

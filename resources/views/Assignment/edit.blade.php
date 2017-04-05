@@ -46,12 +46,25 @@
                 <select name="project_id" class="selectpicker form-control" data-live-search="true">
                     <option style="display: none" selected id="project_id " value="{{ $assignment->project->id }}"> {{ $assignment->project->name }}</option>
                     @foreach ($currentProjects   as $project)
-                        <option id="project_id" value="{{$project->id}}">{{ $project->name }}</option>
-                    @endforeach
+                        @php( $currentParticipants = \App\Project::join('assignments','projects.id','=','assignments.project_id')
+            ->join('project_states','projects.state_id','=','project_states.id')
+            ->where('projects.id',$project->id)
+            ->whereNull('assignments.deleted_at')
+            ->count())
+                        @if($project->max_participants > $currentParticipants)
+                            <option id="project_id" value="{{$project->id}}">{{ $project->name . ' ' .$currentParticipants . '/' . $project->max_participants    }}</option>
+                        @endif                    @endforeach
                     @foreach ($availableProjects as $project)
-                        <option id="project_id" value="{{$project->id}}">{{ $project->name }}</option>
+                        <option id="project_id" value="{{$project->id}}">{{ $project->name  . ' 0/' . $project->max_participants }}</option>
                     @endforeach
                 </select>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Voto finale:</strong>
+                {{ Form::text('final_rating', null, array('placeholder' => 'Voto finale','class' => 'form-control')) }}
             </div>
         </div>
 

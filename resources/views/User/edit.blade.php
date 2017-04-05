@@ -74,18 +74,6 @@
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Stato:</strong>
-                <select name="state_id" class="selectpicker form-control" data-live-search="true">
-                    <option style="display: none" selected id="state_id" value="{{$user->userstate->id}}">{{ $user->userstate->state }}</option>
-                    @foreach ($userstates as $state)
-                        <option id="type_id" value="{{$state->id}}">{{ $state->state }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

@@ -28,6 +28,7 @@
                 <th>Data di inizio</th>
                 <th>Data di fine</th>
                 <th>Stato</th>
+                <th>Nota finale</th>
                 <th></th>
             </tr>
             @foreach ($projects as $project)
@@ -51,6 +52,7 @@
                     <td>{{ $project->start_date }}</td>
                     <td>{{ $project->end_date }}</td>
                     <td>{{ $project->projectstate->state }}</td>
+                    <td>{{ $project->final_rating }}</td>
                     <td>
                         <a class="btn btn-info" href="{{ route('finishedprojects.show',$project->assignment) }}">Show</a>
                     </td>

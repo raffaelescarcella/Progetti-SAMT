@@ -42,6 +42,19 @@
             </div>
         </div>
 
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Tipo:</strong>
+                @php($filetypes = \App\FileType::all())
+                <select name="file_type_id" class="selectpicker form-control" data-live-search="true">
+                    <option hidden selected id="file_type_id" value=""></option>
+                    @foreach ($filetypes as $type)
+                        <option id="file_type_id" value="{{$type->id}}">{{ $type->type }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>

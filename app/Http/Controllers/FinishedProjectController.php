@@ -38,9 +38,9 @@ class FinishedProjectController extends Controller
             ->select('projects.id as id', 'projects.user_id',
                 'projects.name', 'projects.number',
                 'projects.ambit_id', 'projects.start_date',
-                'projects.end_date', 'projects.state_id', 'projects.final_rating',
+                'projects.end_date', 'projects.state_id',
                 'users.name AS nome', 'users.surname AS cognome',
-                'assignments.id as assignment')
+                'assignments.id as assignment','assignments.final_rating as final_rating')
             ->get();
         return view('FinishedProject.index')->with('projects', $projects);
     }

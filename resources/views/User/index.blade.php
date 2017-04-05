@@ -24,7 +24,6 @@
                 <th>Tipo</th>
                 <th>Cellulare</th>
                 <th>Data di nascita</th>
-                <th>Stato</th>
                 <th>Verificato(mail)</th>
                 <th></th>
             </tr>
@@ -36,7 +35,6 @@
                     <td>{{ $user->type->type}}</td>
                     <td>{{ $user->phone }}</td>
                     <td>{{ $user->birthday }}</td>
-                    <td>{{ $user->userstate->state }}</td>
                     <td>{{ $user->verified ? 'Si' : 'No' }}</td>
                     <td>
                     <!--a class="btn btn-info" href="{{-- route('userCRUD.show',$user->id) --}}">Show</a-->

@@ -24,7 +24,7 @@ class AssignmentController extends Controller
             ->join('projects', 'assignments.project_id', '=', 'projects.id')
             ->join('project_states', 'projects.state_id', '=', 'project_states.id')
             ->where('project_states.state', 'In corso')
-            ->select('users.name AS nome', 'users.surname AS cognome', 'projects.name AS progetto', 'assignments.id')
+            ->select('users.name AS nome', 'users.surname AS cognome', 'projects.name AS progetto', 'assignments.id','assignments.final_rating as final_rating')
             ->get();
 
         return view('Assignment.index')->with('assignments', $assignments);
@@ -62,6 +62,7 @@ class AssignmentController extends Controller
             ->get();
 
 
+
         $currentProjects = Project::all()
             ->where('state_id', $current->id);
         $availableProjects = Project::all()
@@ -82,6 +83,7 @@ class AssignmentController extends Controller
         $this->validate($request, [
             'user_id' => 'required|integer',
             'project_id' => 'required|integer',
+            'final_rating' => 'regex:/^[1-6]{1}+(\.[0-9]{1})?$/|nullable',
         ]);
 
         Assignment::create($request->all());
@@ -149,19 +151,49 @@ class AssignmentController extends Controller
             'project_id' => 'required|integer',
         ]);
 
+        if(is_null($request['final_rating']) == false && is_numeric($request['final_rating'])){
+            $tmp = floatval($request['final_rating']);
+            if($tmp > 6){
+                $tmp = 6;
+            }
+            else if($tmp < 1){
+                $tmp = null;
+            }
+        }
+        else{
+            $tmp = null;
+        }
+
         Assignment::find($id)->update([
                 'user_id' => $request['user_id'],
                 'project_id' => $request['project_id'],
+                'final_rating' => $tmp,
             ]
         );
 
         $current = ProjectState::where('state', 'In corso')
+            ->first();
+        $finished = ProjectState::where('state', 'Concluso')
             ->first();
 
         Project::find($request['project_id'])->update([
                 'state_id' => $current->id,
             ]
         );
+
+        $maxParticipants = Project::where('id',$request['project_id'])->first()->max_participants;
+
+
+
+        $currentFinalRating = Assignment::where('project_id',$request['project_id'])
+                                ->whereNotNull('assignments.final_rating')
+                                ->whereNull('assignments.deleted_at')
+                                ->count();
+
+        if($maxParticipants == $currentFinalRating){
+            Project::where('id','=',$request['project_id'])
+                ->update(['state_id' => $finished->id]);
+        }
 
         return redirect()->route('assignments.index')
             ->with('success', 'Assegnazione modificata');
